@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress Bar for List App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+
+    .progress-container {
+      width: 100%;
+      background: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-bar {
+      height: 25px;
+      width: 0%;
+      background: #4caf50;
+      transition: width 0.5s ease, background-color 0.5s ease;
+    }
+
+    .task-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .task-item input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    .task-item input[type="text"] {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 8px;
+      flex: 1;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+
+    .task-item input[type="text"]:focus {
+      border-color: #4caf50;
+    }
+
+    .progress-text {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #444;
+    }
+
+    .reset-btn {
+      background-color: #ff5733;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 16px;
+    }
+
+    .reset-btn:hover {
+      background-color: #e04f2d;
+      transform: scale(1.05);
+    }
+
+    .reset-btn:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Task Progress</h1>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  <div class="progress-text" id="progress-text">0% Completed</div>
+
+  <ul class="task-list" id="task-list">
+    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 1"></li>
+    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 2"></li>
+    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 3"></li>
+    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 4"></li>
+    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 5"></li>
+  </ul>
+
+  <button class="reset-btn" id="reset-btn">Reset Progress</button>
+
+  <script>
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const taskList = document.getElementById('task-list');
+    const resetButton = document.getElementById('reset-btn');
+
+    // Function to update progress
+    const updateProgress = () => {
+      const tasks = document.querySelectorAll('.task-item input[type="checkbox"]');
+      const completedTasks = document.querySelectorAll('.task-item input[type="checkbox"]:checked');
+      const progress = (completedTasks.length / tasks.length) * 100;
+
+      if (!isNaN(progress)) {
+        progressBar.style.width = `${progress}%`;
+
+        // Change progress bar color based on progress
+        if (progress < 30) {
+          progressBar.style.backgroundColor = '#f44336'; // Red
+        } else if (progress < 70) {
+          progressBar.style.backgroundColor = '#ffeb3b'; // Yellow
+        } else {
+          progressBar.style.backgroundColor = '#4caf50'; // Green
+        }
+
+        progressText.textContent = `${Math.round(progress)}% Completed`;
+      } else {
+        console.error('Invalid progress value:', progress);
+      }
+    };
+
+    // Add event listener to checkboxes
+    taskList.addEventListener('change', (event) => {
+      if (event.target.type === 'checkbox') {
+        updateProgress();
+      }
+    });
+
+    // Reset button functionality
+    resetButton.addEventListener('click', () => {
+      const checkboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
+      checkboxes.forEach(checkbox => checkbox.checked = false);  // Uncheck all
+      updateProgress();  // Update progress to 0%
+    });
+
+    // Initial progress update on page load
+    updateProgress();
+  </script>
+</body>
+</html>
