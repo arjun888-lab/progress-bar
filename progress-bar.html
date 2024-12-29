@@ -5,20 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Progress Bar for List App</title>
   <style>
+    /* Minimal styling to avoid GitHub background */
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7; /* Background color for the page */
       color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Vertically center the content */
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
       color: #444;
+      margin-bottom: 20px;
     }
 
     .progress-container {
-      width: 100%;
+      width: 80%;
       background: #e0e0e0;
       border-radius: 10px;
       overflow: hidden;
@@ -31,6 +38,13 @@
       width: 0%;
       background: #4caf50;
       transition: width 0.5s ease, background-color 0.5s ease;
+    }
+
+    .progress-text {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #444;
     }
 
     .task-list {
@@ -67,14 +81,6 @@
       border-color: #4caf50;
     }
 
-    .progress-text {
-      text-align: center;
-      margin-top: 10px;
-      font-weight: bold;
-      font-size: 18px;
-      color: #444;
-    }
-
     .reset-btn {
       background-color: #ff5733;
       color: white;
@@ -98,22 +104,24 @@
   </style>
 </head>
 <body>
-  <h1>Task Progress</h1>
+  <div>
+    <h1>Task Progress</h1>
 
-  <div class="progress-container">
-    <div class="progress-bar" id="progress-bar"></div>
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <div class="progress-text" id="progress-text">0% Completed</div>
+
+    <ul class="task-list" id="task-list">
+      <li class="task-item"><input type="checkbox"> <input type="text" value="Task 1"></li>
+      <li class="task-item"><input type="checkbox"> <input type="text" value="Task 2"></li>
+      <li class="task-item"><input type="checkbox"> <input type="text" value="Task 3"></li>
+      <li class="task-item"><input type="checkbox"> <input type="text" value="Task 4"></li>
+      <li class="task-item"><input type="checkbox"> <input type="text" value="Task 5"></li>
+    </ul>
+
+    <button class="reset-btn" id="reset-btn">Reset Progress</button>
   </div>
-  <div class="progress-text" id="progress-text">0% Completed</div>
-
-  <ul class="task-list" id="task-list">
-    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 1"></li>
-    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 2"></li>
-    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 3"></li>
-    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 4"></li>
-    <li class="task-item"><input type="checkbox"> <input type="text" value="Task 5"></li>
-  </ul>
-
-  <button class="reset-btn" id="reset-btn">Reset Progress</button>
 
   <script>
     const progressBar = document.getElementById('progress-bar');
